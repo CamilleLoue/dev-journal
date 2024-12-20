@@ -27,3 +27,25 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 ## How do I deploy this?
 
 Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+
+## Dev commands
+
+Start the dev postgres database
+
+```shell
+docker compose up -d --wait
+```
+
+Connect with psql (optional)
+
+```shell
+psql postgresql://postgres:postgres@localhost:5432/dev_journal_dev
+# OR
+pgcli postgresql://postgres:postgres@localhost:5432/dev_journal_dev
+```
+
+Generate a migration and apply to the database
+
+```shell
+yarn prisma migrate dev
+```
