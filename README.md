@@ -49,3 +49,11 @@ Generate a migration and apply to the database
 ```shell
 yarn prisma migrate dev
 ```
+
+## Note for next time
+
+Next steps:
+
+- Integrate Prisma with tRPC
+- Write tRPC router to make DB call
+- Call tRPC route from React
