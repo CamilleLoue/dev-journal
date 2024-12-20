@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Octokit } from "octokit";
+import { getCommits } from "../../apiClients/githubClient";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { env } from "~/env";
 
@@ -19,24 +20,10 @@ export const githubRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const { username, repoOwner, repoName } = input;
 
-      const response = await octokit.request(
-        "GET /repos/{owner}/{repo}/commits",
-        {
-          owner: repoOwner,
-          repo: repoName,
-          author: username,
-          per_page: 100,
-          headers: {
-            "X-GitHub-Api-Version": "2022-11-28",
-          },
-        },
-      );
+      const commits = await getCommits(username, repoOwner, repoName);
 
-      return response.data.map((commit) => ({
-        sha: commit.sha,
-        message: commit.commit.message,
-        date: commit.commit.author?.date ?? null,
-        url: commit.html_url,
-      }));
+      console.log(commits);
+
+      return commits;
     }),
 });
